@@ -25,7 +25,7 @@ class Category(models.Model):
 
 class Photo(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='product_photos/')
+    image = models.ImageField(upload_to='product/photos/')
 
     def __str__(self):
         return self.image.url
