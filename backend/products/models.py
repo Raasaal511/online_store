@@ -34,6 +34,9 @@ class Photo(models.Model):
 class Cart(models.Model):
     owner = models.OneToOneField(to='users.User', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.owner.username
+
 
 class CartProduct(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)

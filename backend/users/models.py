@@ -8,7 +8,7 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    bio = models.TextField(null=True)
+    bio = models.TextField(null=True, blank=True)
     profile_photo = models.ImageField(null=True, blank=True, upload_to='pofile/images/')
 
     def __str__(self):
