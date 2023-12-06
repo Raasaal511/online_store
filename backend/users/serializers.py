@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import PasswordField
 
-from .models import User
+from .models import User, Profile
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class UserRegisterSerializer(serializers.ModelSerializer):
     password = PasswordField()
 
     class Meta:
@@ -21,7 +21,19 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserLoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name')
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
