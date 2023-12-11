@@ -1,13 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
-import HelloWorld from './HelloWorld';
+import {ProductList, ProductDetail} from './Product';
+import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 
 
 function App() {
   return (
-   <div>
-   <HelloWorld />
-   </div>
+    <Router>
+        <Routes>
+            <Route path='/products' element={<ProductList />} />
+            <Route path='/products/:slug' element={<ProductDetail />} />
+        </Routes>
+    </Router>
   );
 }
 
