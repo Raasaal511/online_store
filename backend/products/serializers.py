@@ -4,9 +4,14 @@ from .models import Product, Category, Photo, Cart, CartProduct
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    category_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Product
-        fields = ('name', 'price', 'category')
+        fields = ['id', 'name', 'description', 'price', 'category_name']
+
+    def get_category_name(self, obj):
+        return obj.category.name if obj.category else None
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -24,4 +29,4 @@ class PhotoSerializer(serializers.ModelSerializer):
 class CartProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = CartProduct
-        fields = ('cart.owner', 'product.name', 'ordering')
+        fields = ('cart', 'product', 'ordering')
