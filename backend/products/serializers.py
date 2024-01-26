@@ -3,15 +3,10 @@ from rest_framework import serializers
 from .models import Product, Category, Photo, Cart, CartProduct
 
 
-class ProductSerializer(serializers.ModelSerializer):
-    category_name = serializers.SerializerMethodField()
-
+class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
-        fields = ['id', 'name', 'description', 'price', 'category_name']
-
-    def get_category_name(self, obj):
-        return obj.category.name if obj.category else None
+        model = Photo
+        fields = ('image',)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -20,13 +15,39 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 
-class PhotoSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
+    photos = PhotoSerializer(many=True)
+    category = CategorySerializer()
+
     class Meta:
-        model = Photo
-        fields = ('product.name', 'image')
+        model = Product
+        fields = ('name', 'description', 'price', 'photos', 'category')
+
+    def create(self, validated_data):
+        category, created = Category.objects.get_or_create(name=validated_data['category'])
+
+        product = Product.objects.create(
+            name=validated_data['name'],
+            description=validated_data['description'],
+            price=validated_data['price'],
+            category=category,
+        )
+
+        Photo.objects.create(product=product, image=validated_data['photos']['image'])
+
+        return product
+
+
+class CartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cart
+        fields = ('owner',)
 
 
 class CartProductSerializer(serializers.ModelSerializer):
+    total_product_price = serializers.IntegerField(read_only=True)
+    product = ProductSerializer()
+
     class Meta:
         model = CartProduct
-        fields = ('cart', 'product', 'ordering')
+        fields = ('product', 'cart', 'ordering', 'quantity', 'total_product_price')
