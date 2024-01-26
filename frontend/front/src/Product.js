@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import axios from 'axios'
-import { Link, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 
 function ProductList() {
@@ -21,17 +21,26 @@ function ProductList() {
     <div  style={{ width: '290px'}}>
       <h1>Список продуктов</h1>
       <ul>
+
         {products.map((product) => (
+         <Link to={'/products/${product.slug}'}>
+
           <li key={product.id} style={{border: '1px solid #333',
                                        padding: '10px 50px',
                                        margin: '10px'}}>
-            <p>Name: {product.name}</p>
+            {product.photos.map((photo) => (
+             <img key={photo.image}
+                  src={photo.image}
+                  alt={product.name}
+                  style={{ width: '100px', height: '100px' }} />
+            ))}
+            <p>{product.name}</p>
             <p>Price: {product.price}$</p>
-            <p>Category: {product.category_name}</p>
-            <Link to={'/products/${product.slug}'}>more...</Link>
+            <p>{product.category_name}</p>
+
 
           </li>
-
+        </Link>
 
         ))}
       </ul>
