@@ -13,7 +13,7 @@ class Category(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
 
-        return super().save(args, kwargs)
+        return super().save(*args, **kwargs)
 
 
 class Product(models.Model):
@@ -30,15 +30,16 @@ class Product(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
 
-        return super().save(args, kwargs)
+        return super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-pk']
 
 
 class Photo(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='product/photos/')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='photos', null=True, blank=True)
+    image = models.ImageField(upload_to='product/photos/', null=True, blank=True)
 
     def __str__(self):
         return self.image.url
@@ -53,5 +54,7 @@ class Cart(models.Model):
 
 class CartProduct(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product')
+    quantity = models.PositiveIntegerField(default=1)
     ordering = models.BooleanField(default=True)
+
