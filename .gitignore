@@ -1,0 +1,16 @@
+.idea
+db.sqlite3
+backend/config/__pycache__/
+backend/products/__pycache__/
+backend/products/migrations/*
+backend/users/migrations/*
+*/*/__pycacahe__/
+*/*/*/__pycacahe__/
+backend/users/migrations/__pycache__/
+frontend/front/build/
+backend/users/__pycache__/
+frontend/front/node_modules/
+backend/media/
+backend/db.sqlite3
+frontend/package-lock.json
+
