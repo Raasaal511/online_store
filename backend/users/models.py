@@ -3,11 +3,11 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ['email', 'phone_number']
     username = models.CharField(unique=True, max_length=100)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=155, null=True, blank=True)
+    phone_number = models.CharField(unique=True, max_length=155, null=True, blank=True)
 
     def __str__(self):
         return self.email
