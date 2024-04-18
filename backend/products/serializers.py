@@ -6,7 +6,7 @@ from .models import Product, Category, Photo, Cart, CartProduct
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
-        fields = ('image',)
+        fields = ('product', 'image')
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -16,26 +16,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    photos = PhotoSerializer(many=True)
-    category = CategorySerializer()
+    photos = PhotoSerializer(many=True, read_only=True)
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
 
     class Meta:
         model = Product
         fields = ('name', 'description', 'price', 'photos', 'category')
-
-    def create(self, validated_data):
-        category, created = Category.objects.get_or_create(name=validated_data['category'])
-
-        product = Product.objects.create(
-            name=validated_data['name'],
-            description=validated_data['description'],
-            price=validated_data['price'],
-            category=category,
-        )
-
-        Photo.objects.create(product=product, image=validated_data['photos']['image'])
-
-        return product
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -46,7 +32,6 @@ class CartSerializer(serializers.ModelSerializer):
 
 class CartProductSerializer(serializers.ModelSerializer):
     total_product_price = serializers.IntegerField(read_only=True)
-    product = ProductSerializer()
 
     class Meta:
         model = CartProduct
