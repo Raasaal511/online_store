@@ -3,6 +3,8 @@ db.sqlite3
 media/
 backend/config/__pycache__/
 backend/products/__pycache__/
+backend/__pycache__/
+backend/products/tests/__pycache__/
 backend/products/migrations/*
 backend/users/migrations/*
 */*/__pycacahe__/
