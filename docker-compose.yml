@@ -1,0 +1,51 @@
+version: "3.8"
+
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: online_shop
+
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    volumes:
+      - static_volume:/app/static
+    environment:
+      DEBUG: "False"
+      SECRET_KEY: "django-insecure-lozshe#*e^ixkp3w!ihjgt*$9zdoo460%zhy-r$5957(b-_w_w"
+      DB_NAME: "online_shop"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_HOST: "localhost"
+      DB_PORT: 5432
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+
+volumes:
+  static_volume:
