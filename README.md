@@ -6,11 +6,14 @@
 Пока сайт находиться в стадии застоя но я буду работать с ним дальше. Надеюсь что  вам понравиться мой проет и вы найдет что вам нужно.
 
 Основной стек:
-Python==3.10.4
-djangorestframework==3.14.0
-Django==4.2.7
-React: ^18.2.0 (честно не знаю).
-Docker, Docker Compose.
-Nginx.
+<ul>
+  <li>Python==3.10.4</li>
+  <li>djangorestframework==3.14.0</li>
+  <li>Django==4.2.7</li>
+  <li>React: ^18.2.0 (честно не знаю).</li>
+  <li>Docker</li>
+  <li>ddocker-compose</li>
+  <li>Nginx</li>
+</ul>
 
 Правило устоновки будет скоро...
