@@ -2,7 +2,7 @@ from django.db import models
 from django_extensions.db.fields import AutoSlugField
 
 
-class Category(models.Model):
+class Catalog(models.Model):
     name = models.CharField(max_length=155)
     slug = AutoSlugField(unique=True, blank=True, null=True, populate_from='name')
 
@@ -14,8 +14,8 @@ class Product(models.Model):
     name = models.CharField(max_length=155)
     description = models.TextField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,
-                                 related_name='category')
+    catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE,
+                                related_name='category')
     slug = AutoSlugField(unique=True, blank=True, null=True, populate_from='name')
 
     def __str__(self):
@@ -36,13 +36,13 @@ class Product(models.Model):
 #         verbose_name = "Image"
 #         verbose_name_plural = "Images"
 
-    # def __str__(self):
-    #     res = ''
-    #     if self.title:
-    #         res = self.title
-    #     else:
-    #         res = self.image.url
-    #     return res
+# def __str__(self):
+#     res = ''
+#     if self.title:
+#         res = self.title
+#     else:
+#         res = self.image.url
+#     return res
 
 class Photo(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE,
@@ -65,4 +65,3 @@ class CartProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product')
     quantity = models.PositiveIntegerField(default=1)
     ordering = models.BooleanField(default=True)
-

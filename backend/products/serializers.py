@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Product, Category, Photo, Cart, CartProduct
+from .models import Product, Catalog, Photo, Cart, CartProduct
 
 
 class PhotoSerializer(serializers.ModelSerializer):
@@ -9,15 +9,15 @@ class PhotoSerializer(serializers.ModelSerializer):
         fields = ('product', 'image')
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class CatalogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = Catalog
         fields = ('name',)
 
 
 class ProductSerializer(serializers.ModelSerializer):
     photos = PhotoSerializer(many=True, read_only=True)
-    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+    category = serializers.PrimaryKeyRelatedField(queryset=Catalog.objects.all())
 
     class Meta:
         model = Product

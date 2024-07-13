@@ -17,7 +17,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
     def default_photo(self, obj):
         photo = obj.profile_photo
-        default_photo_path = '/media/product/photos/default.png'
+        default_photo_path = '/static/images/icon/def_user.png'
         if photo:
             return mark_safe(f'<img src="{photo.image.url}" style="width: 84px; height:75px;" />')
 

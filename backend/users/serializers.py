@@ -1,3 +1,4 @@
+from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import PasswordField
 
@@ -5,11 +6,16 @@ from .models import User, Profile
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = PasswordField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email')
+
+
+class UserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = ('email', 'username', 'password')
 
 
 class ProfileSerializer(serializers.ModelSerializer):

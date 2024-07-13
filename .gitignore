@@ -1,6 +1,6 @@
 .idea
-db.sqlite3
 media/
+__pycache__/
 backend/config/__pycache__/
 backend/products/__pycache__/
 backend/__pycache__/
@@ -10,10 +10,12 @@ backend/users/migrations/*
 */*/__pycacahe__/
 */*/*/__pycacahe__/
 backend/users/migrations/__pycache__/
-frontend/front/build/
 backend/users/__pycache__/
-frontend/front/node_modules/
+frontend/build/
 backend/media/
 backend/db.sqlite3
+node_modules
+frontend/node_module/
 frontend/package-lock.json
-
+frontend/package.json
+./backend/.dockerignore

@@ -6,10 +6,10 @@ from . import views
 
 router = routers.DefaultRouter()
 
-router.register(r'productlist', views.ProductViewSet)
-router.register(r'categories', views.CategoryViewSet)
+router.register(r'', views.ProductViewSet)
+router.register(r'catalog', views.CatalogViewSet)
 router.register(r'cart', views.CartProductViewSet)
-router.register(r'photos', views.PhotoViewSet)  # Надо проверить на правильность
+router.register(r'photos', views.PhotoViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
